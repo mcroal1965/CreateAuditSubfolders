@@ -15,7 +15,7 @@ namespace CreateAuditSubfolders
                 if (!Directory.Exists(Input))
                 {
                     Console.WriteLine(@"Folder does not exist: "+Input);
-                    Console.WriteLine(@"Syntax: CreateAuditSubFolders drive:\path");
+                    Console.WriteLine(@"Syntax: CreateAuditSubFolders F:\NautilusExports\{auditX}");
                     Console.WriteLine("");
                     Console.WriteLine("Press any key to exit.");
                     Console.ReadKey();
@@ -23,12 +23,20 @@ namespace CreateAuditSubfolders
                 }
                 Int32 InputLength = Input.Length;
 
+                if (!Directory.Exists(@"F:\NautilusExports\nConvert"))
+                {
+                    Console.WriteLine(@"nConvert program filder does not exist at F:\NautilusExports\nConvert");
+                    Console.WriteLine("");
+                    Console.WriteLine("Press any key to exit.");
+                    Console.ReadKey();
+                    Environment.Exit(1);
+                }
                 //generate CMD file that uses nconvert to change TIFs to PDFs
                 String[] FoundTIFs = Directory.GetFiles(Input, "*.tif", SearchOption.TopDirectoryOnly);
                 String TIFPDFcmd = Input + @"\TifToPDF.cmd";
                 File.Delete(TIFPDFcmd);
-                File.AppendAllText(TIFPDFcmd, "c:\r\n");
-                File.AppendAllText(TIFPDFcmd, @"cd\cb\nConvert"+"\r\n");
+                File.AppendAllText(TIFPDFcmd, "F:\r\n");
+                File.AppendAllText(TIFPDFcmd, @"cd\NautilusExports\nConvert"+"\r\n");
                 foreach (String TIFFile in FoundTIFs)
                 {
                     File.AppendAllText(TIFPDFcmd, "nconvert -xall -multi -o $%% -out pdf -D -c 3 " + TIFFile+"\r\n");
@@ -44,6 +52,8 @@ namespace CreateAuditSubfolders
                 process.StartInfo = startInfo;
                 process.Start();
                 process.WaitForExit();
+
+                File.Delete(TIFPDFcmd);
 
                 String[] FoundFiles = Directory.GetFiles(Input, "*.*", SearchOption.TopDirectoryOnly);
                 foreach (String FoundFile in FoundFiles)
