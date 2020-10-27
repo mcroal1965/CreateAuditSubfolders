@@ -38,7 +38,6 @@ namespace CreateAuditSubfolders
                     FileInfo fi = new FileInfo(FFFile);
                     String src = fi.FullName;
                     String dest = fi.FullName.Substring(0,fi.FullName.Length-fi.Extension.Length)+".tif";
-                    Console.WriteLine("Rename "+src+" to "+dest);
                     File.Copy(src, dest);
                     File.Delete(src);
                 }
