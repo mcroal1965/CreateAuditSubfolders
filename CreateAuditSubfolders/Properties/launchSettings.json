@@ -1,7 +1,8 @@
 {
   "profiles": {
     "CreateAuditSubfolders": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "E:\\NautilusExports\\Audit3"
     }
   }
 }

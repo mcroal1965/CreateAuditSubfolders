@@ -31,15 +31,31 @@ namespace CreateAuditSubfolders
                     Console.ReadKey();
                     Environment.Exit(1);
                 }
+                //rename .___ to .TIF
+                String[] FoundFFFs = Directory.GetFiles(Input, "*.___", SearchOption.TopDirectoryOnly);
+                foreach (String FFFile in FoundFFFs)
+                {
+                    FileInfo fi = new FileInfo(FFFile);
+                    String src = fi.FullName;
+                    String dest = fi.FullName.Substring(0,fi.FullName.Length-fi.Extension.Length)+".tif";
+                    Console.WriteLine("Rename "+src+" to "+dest);
+                    File.Copy(src, dest);
+                    File.Delete(src);
+                }
+                
                 //generate CMD file that uses nconvert to change TIFs to PDFs
                 String[] FoundTIFs = Directory.GetFiles(Input, "*.tif", SearchOption.TopDirectoryOnly);
                 String TIFPDFcmd = Input + @"\TifToPDF.cmd";
                 File.Delete(TIFPDFcmd);
-                File.AppendAllText(TIFPDFcmd, "F:\r\n");
+                File.AppendAllText(TIFPDFcmd, "E:\r\n");
                 File.AppendAllText(TIFPDFcmd, @"cd\NautilusExports\nConvert"+"\r\n");
                 foreach (String TIFFile in FoundTIFs)
                 {
-                    File.AppendAllText(TIFPDFcmd, "nconvert -xall -multi -o $%% -out pdf -D -c 3 " + TIFFile+"\r\n");
+                    long size = new System.IO.FileInfo(TIFFile).Length;
+                    if (size > 2048000)
+                    {
+                        File.AppendAllText(TIFPDFcmd, "nconvert -xall -multi -o $%% -out pdf -D -c 3 " + TIFFile + "\r\n");
+                    }
                 }
                 File.AppendAllText(TIFPDFcmd, "exit");
 
