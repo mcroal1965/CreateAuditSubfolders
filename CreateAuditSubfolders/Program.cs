@@ -47,7 +47,7 @@ namespace CreateAuditSubfolders
                 String[] FoundTIFs = Directory.GetFiles(Input, "*.tif", SearchOption.TopDirectoryOnly);
                 String TIFPDFcmd = Input + @"\TifToPDF.cmd";
                 File.Delete(TIFPDFcmd);
-                File.AppendAllText(TIFPDFcmd, "E:\r\n");
+                File.AppendAllText(TIFPDFcmd, "F:\r\n");
                 File.AppendAllText(TIFPDFcmd, @"cd\NautilusExports\nConvert"+"\r\n");
                 foreach (String TIFFile in FoundTIFs)
                 {
