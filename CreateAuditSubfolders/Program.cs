@@ -7,12 +7,13 @@ namespace CreateAuditSubfolders
 {
     class Program
     {
+        // 03-22-2022  Change F: to L:
         static void Main(string[] args)
         {
             if (args.Length != 2)
             {
                 Console.WriteLine(@"Incorrect number of arguments supplied.");
-                Console.WriteLine(@"Syntax: CreateAuditSubFolders F:\NautilusExports\{auditX} YN");
+                Console.WriteLine(@"Syntax: CreateAuditSubFolders L:\NautilusExports\{auditX} YN");
                 Console.WriteLine("");
                 Console.WriteLine("Press any key to exit.");
                 Console.ReadKey();
@@ -24,7 +25,7 @@ namespace CreateAuditSubfolders
                 if (!Directory.Exists(Input))
                 {
                     Console.WriteLine(@"Folder does not exist: "+Input);
-                    Console.WriteLine(@"Syntax: CreateAuditSubFolders F:\NautilusExports\{auditX} YN");
+                    Console.WriteLine(@"Syntax: CreateAuditSubFolders L:\NautilusExports\{auditX} YN");
                     Console.WriteLine("");
                     Console.WriteLine("Press any key to exit.");
                     Console.ReadKey();
@@ -36,16 +37,16 @@ namespace CreateAuditSubfolders
                 if (ConvertYN != "Y" && ConvertYN != "N")
                 {
                     Console.WriteLine(@"ConvertYN argument is not Y or N: " + ConvertYN);
-                    Console.WriteLine(@"Syntax: CreateAuditSubFolders F:\NautilusExports\{auditX} YN");
+                    Console.WriteLine(@"Syntax: CreateAuditSubFolders L:\NautilusExports\{auditX} YN");
                     Console.WriteLine("");
                     Console.WriteLine("Press any key to exit.");
                     Console.ReadKey();
                     Environment.Exit(1);
                 }
 
-                if (!Directory.Exists(@"F:\NautilusExports\nConvert"))
+                if (!Directory.Exists(@"L:\NautilusExports\nConvert"))
                 {
-                    Console.WriteLine(@"nConvert program folder does not exist at F:\NautilusExports\nConvert");
+                    Console.WriteLine(@"nConvert program folder does not exist at L:\NautilusExports\nConvert");
                     Console.WriteLine("");
                     Console.WriteLine("Press any key to exit.");
                     Console.ReadKey();
@@ -85,7 +86,7 @@ namespace CreateAuditSubfolders
                     String[] FoundTIFs = Directory.GetFiles(Input, "*.tif", SearchOption.TopDirectoryOnly);
                     String TIFPDFcmd = Input + @"\TifToPDF.cmd";
                     File.Delete(TIFPDFcmd);
-                    File.AppendAllText(TIFPDFcmd, "F:\r\n");
+                    File.AppendAllText(TIFPDFcmd, "L:\r\n");
                     File.AppendAllText(TIFPDFcmd, @"cd\NautilusExports\nConvert" + "\r\n");
                     foreach (String TIFFile in FoundTIFs)
                     {
